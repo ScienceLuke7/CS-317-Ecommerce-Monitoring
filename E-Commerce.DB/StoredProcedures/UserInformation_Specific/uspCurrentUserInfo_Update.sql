@@ -5,7 +5,7 @@ GO
 Description: Updates the user's email address in the UserInfo table
 Test String: 
 
-DECLARE @UpdatedEmail varchar(100) = 'testUpdateEmail@gmail.com'
+DECLARE @UpdatedEmail varchar(100) = NULL
 EXECUTE [dbo].[uspCurrentUserInfo_Update] @UpdatedEmail
 
 Author      Date        Description
@@ -21,5 +21,5 @@ AS
 BEGIN
 
     UPDATE [dbo].[UserInformation]
-    SET CurrentEmail = @UpdatedEmail
+    SET CurrentEmail = CASE WHEN @UpdatedEmail IS NOT NULL THEN @UpdatedEmail ELSE CurrentEmail END
 END
