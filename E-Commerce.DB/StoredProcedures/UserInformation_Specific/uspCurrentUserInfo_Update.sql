@@ -2,10 +2,10 @@ USE [ECommerceMonitorDB]
 GO
 
 /*
-Description: Updates the user's email address in the UserInfo table
+Description: Updates the user's email address in the UserInformation table
 Test String: 
 
-DECLARE @UpdatedEmail varchar(100) = NULL
+DECLARE @UpdatedEmail varchar(100) = 'anotheremail@gmail.com'
 EXECUTE [dbo].[uspCurrentUserInfo_Update] @UpdatedEmail
 
 Author      Date        Description

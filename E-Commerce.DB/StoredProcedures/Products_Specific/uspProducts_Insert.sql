@@ -7,7 +7,7 @@ Test String:
 
 DECLARE @NewItem ProductsItem
 INSERT INTO @NewItem (ECommerceID, ProductGTIN, ProductModelNumber, CurrentPrice, ProductURL)
-VALUES(1, 123, 456, 2.14, 'sample.com/fake_item')
+VALUES (5, 123, 456, 2.14, 'freestuff.com/fake_item')
 EXECUTE [dbo].[uspProducts_Insert] @NewItem
 
 Author      Date        Description

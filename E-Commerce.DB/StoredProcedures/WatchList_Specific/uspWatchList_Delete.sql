@@ -7,7 +7,7 @@ Test String:
 
 DECLARE @RemovedItem WatchListItem
 INSERT INTO @RemovedItem (ProductGTIN, ProductModelNumber, ProductName, DesiredPrice)
-VALUES(123, 456, 'testProduct', 1.01)
+VALUES(126, 459, NULL, NULL)
 EXECUTE [dbo].[uspWatchList_Delete] @RemovedItem
 
 Author      Date        Description
@@ -21,12 +21,12 @@ CREATE OR ALTER PROCEDURE [dbo].[uspWatchList_Delete]
 AS
 
 BEGIN
-    DELETE FROM [dbo].[WatchList] 
-    WHERE EXISTS (
-        SELECT * 
-        FROM [dbo].[WatchList] WL
-        INNER JOIN @RemovedItem RI ON RI.ProductGTIN = WL.ProductGTIN
-            AND RI.ProductModelNumber = WL.ProductModelNumber 
-            AND RI.ProductName = WL.ProductName
-    )
+    SELECT TOP (1) *
+    INTO #item
+    FROM @RemovedItem
+
+    DELETE W FROM [dbo].[WatchList] W
+    INNER JOIN #item 
+        ON #item.ProductGTIN = W.ProductGTIN
+        AND #item.ProductModelNumber = W.ProductModelNumber
 END

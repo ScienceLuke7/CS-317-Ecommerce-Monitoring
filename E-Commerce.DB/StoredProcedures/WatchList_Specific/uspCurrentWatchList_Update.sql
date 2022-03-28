@@ -7,7 +7,7 @@ Test String:
 
 DECLARE @UpdatedItem WatchListItem
 INSERT INTO @UpdatedItem (ProductGTIN, ProductModelNumber, ProductName, DesiredPrice)
-VALUES(123, 456, 'testProduct', 0.99)
+VALUES(124, 457, NULL, 0.01)
 EXECUTE [dbo].[uspCurrentWatchList_Update] @UpdatedItem
 
 Author      Date        Description
@@ -22,12 +22,14 @@ AS
 
 BEGIN
 
-    UPDATE [dbo].[WatchList]
-    SET DesiredPrice = (SELECT TOP(1) DesiredPrice FROM @UpdatedItem)
-    WHERE EXISTS (SELECT *
-    FROM [dbo].[WatchList] WL
-    INNER JOIN @UpdatedItem UI
-        ON UI.ProductGTIN = WL.ProductGTIN
-        AND UI.ProductModelNumber = WL.ProductModelNumber
-        AND UI.ProductName = WL.ProductName)
+    SELECT TOP (1) *
+    INTO #item
+    FROM @UpdatedItem
+
+    UPDATE W
+    SET DesiredPrice = #item.DesiredPrice
+    FROM [dbo].[WatchList] W
+    INNER JOIN #item 
+        ON #item.ProductGTIN = W.ProductGTIN
+        AND #item.ProductModelNumber = W.ProductModelNumber
 END

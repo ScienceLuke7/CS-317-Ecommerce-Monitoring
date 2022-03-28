@@ -7,7 +7,7 @@ Test String:
 
 DECLARE @RemovedItem ProductsItem
 INSERT INTO @RemovedItem (ECommerceID, ProductGTIN, ProductModelNumber, CurrentPrice, ProductURL)
-VALUES(1, 123, 456, 2.14, 'sample.com/fake_item')
+VALUES (5, 123, 456, 0.0, 'doesnt matter')
 EXECUTE [dbo].[uspProducts_Delete] @RemovedItem
 
 Author      Date        Description
@@ -21,13 +21,13 @@ CREATE OR ALTER PROCEDURE [dbo].[uspProducts_Delete]
 AS
 
 BEGIN
-    DELETE FROM [dbo].[Products] 
-    WHERE EXISTS (
-        SELECT * 
-        FROM [dbo].[Products] P
-        INNER JOIN @RemovedItem RI 
-            ON  RI.ECommerceID = P.ECommerceID
-            AND RI.ProductGTIN = P.ProductGTIN
-            AND RI.ProductModelNumber = P.ProductModelNumber 
-    )
+    SELECT TOP (1) *
+    INTO #item
+    FROM @RemovedItem
+
+    DELETE P FROM [dbo].[Products] P
+    INNER JOIN #item 
+        ON #item.EcommerceID = P.ECommerceID
+        AND #item.ProductGTIN = P.ProductGTIN
+        AND #item.ProductModelNumber = P.ProductModelNumber
 END

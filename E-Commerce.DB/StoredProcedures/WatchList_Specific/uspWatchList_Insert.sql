@@ -7,7 +7,11 @@ Test String:
 
 DECLARE @NewItem WatchListItem
 INSERT INTO @NewItem (ProductGTIN, ProductModelNumber, ProductName, DesiredPrice)
-VALUES(123, 456, 'testProduct', 1.01)
+VALUES 
+    (123, 456, 'testProduct', 1.01),
+    (124, 457, 'testProduct2', 20.21),
+    (125, 458, NULL, 231234.12),
+    (126, 459, 'really long dog toy with edible parts', 0.11)
 EXECUTE [dbo].[uspCurrentWatchList_Insert] @NewItem
 
 Author      Date        Description
