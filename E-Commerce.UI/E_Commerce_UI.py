@@ -8,7 +8,7 @@ from PyQt5.QtSql import *
 
 def main():
     app = QApplication(sys.argv)
-    ex = Window()
+    ex = Window(app.primaryScreen().size())
     ex.show()
     sys.exit(app.exec_())
 
