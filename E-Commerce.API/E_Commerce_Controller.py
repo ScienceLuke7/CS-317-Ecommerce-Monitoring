@@ -13,7 +13,7 @@ repository: ECommerceRepository = ECommerceRepository()
 def home():
     return jsonify('hello wooorld')
 
-@app.route("/sampleWatchlist", methods=["GET"])
+@app.route("/getSampleWatchlist", methods=["GET"])
 def getSampleWatchList():
     sample: WatchList = WatchList()
     sample.ProductGTIN = 1234
