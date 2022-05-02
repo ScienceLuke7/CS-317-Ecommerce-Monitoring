@@ -7,11 +7,3 @@ class WatchList:
     DesiredPrice: float
 
     def __init__(self): return
-
-"""     def serialize(self):
-        return {
-            'ProductGTIN': self.ProductGTIN,
-            'ProductModelNumber': self.ProductModelNumber,
-            'ProductName': self.ProductName,
-            'DesiredPrice': self.DesiredPrice
-        } """
